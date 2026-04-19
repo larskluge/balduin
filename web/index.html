@@ -72,6 +72,30 @@
     .btn:hover { filter: brightness(1.08); }
     .btn:active { transform: translateY(1px); }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn--ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid #33334a;
+    }
+    .field {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .field input {
+      appearance: none;
+      background: #0e0e16;
+      color: var(--text);
+      border: 1px solid #33334a;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font: inherit;
+      font-variant-numeric: tabular-nums;
+      width: 10ch;
+    }
+    .field input:focus { outline: 1px solid var(--accent); }
     .panel {
       background: var(--panel);
       border: 1px solid #2a2a3a;
@@ -121,9 +145,14 @@
 
     <canvas id="dos" width="640" height="400"></canvas>
 
-    <div class="toolbar">
+    <form class="toolbar" id="speed-form">
       <button class="btn" id="fullscreen-btn" type="button">Play fullscreen</button>
-    </div>
+      <label class="field">
+        cycles/ms
+        <input type="number" id="cycles-input" min="100" max="200000" step="100" value="26532" />
+      </label>
+      <button class="btn btn--ghost" type="submit">Apply</button>
+    </form>
 
     <section class="panel">
       <h2>Controls</h2>
@@ -150,11 +179,20 @@
 
   <script src="https://js-dos.com/6.22/current/js-dos.js"></script>
   <script>
+    const DEFAULT_CYCLES = 26532;
+    const urlCycles = parseInt(new URLSearchParams(location.search).get("cycles"), 10);
+    const cycles = Number.isFinite(urlCycles) && urlCycles >= 100 ? urlCycles : DEFAULT_CYCLES;
+    document.getElementById("cycles-input").value = cycles;
+
     Dos(document.getElementById("dos"), {
       wdosboxUrl: "https://js-dos.com/6.22/current/wdosbox.js",
     }).ready((fs, main) => {
       fs.extract("balduin.zip?v=3").then(() => {
-        main(["-conf", "dosbox.conf", "-c", "balduin.exe"]);
+        main([
+          "-conf", "dosbox.conf",
+          "-c", `config -set "cpu cycles=fixed ${cycles}"`,
+          "-c", "balduin.exe",
+        ]);
       });
     });
 
@@ -162,6 +200,14 @@
     document.getElementById("fullscreen-btn").addEventListener("click", () => {
       const req = canvas.requestFullscreen || canvas.webkitRequestFullscreen;
       req?.call(canvas).then(() => canvas.focus());
+    });
+    document.getElementById("speed-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const v = parseInt(document.getElementById("cycles-input").value, 10);
+      if (!Number.isFinite(v) || v < 100) return;
+      const params = new URLSearchParams(location.search);
+      params.set("cycles", v);
+      location.search = params.toString();
     });
   </script>
 </body>
