@@ -204,6 +204,7 @@
       text-transform: uppercase;
       color: var(--muted-2);
       display: flex;
+      justify-content: center;
       gap: 14px;
       flex-wrap: wrap;
     }
@@ -451,6 +452,12 @@
       color: var(--phosphor);
       font-size: 12.5px;
     }
+    .specs a {
+      color: var(--phosphor);
+      text-decoration: none;
+      border-bottom: 1px solid var(--phosphor-dim);
+    }
+    .specs a:hover { border-bottom-color: var(--phosphor); }
 
     /* ─── footer ─── */
     footer {
@@ -598,12 +605,15 @@
 
         <dt>Binary</dt>
         <dd>Runs the original <code>balduin.exe</code> from 2004 — <strong>3,577 bytes</strong> (~3.5 KB), unmodified</dd>
+
+        <dt>Emulator</dt>
+        <dd>Emulated with <a href="https://js-dos.com" target="_blank" rel="noopener">js-dos</a> — DOSBox compiled to WebAssembly</dd>
+
+        <dt>Repository</dt>
+        <dd><a href="https://github.com/larskluge/balduin" target="_blank" rel="noopener">github.com/larskluge/balduin</a></dd>
       </dl>
     </section>
 
-    <footer>
-      <span>Emulated with <a href="https://js-dos.com" target="_blank" rel="noopener">js-dos</a> &middot; DOSBox compiled to WebAssembly</span>
-    </footer>
   </main>
 
   <script src="https://js-dos.com/6.22/current/js-dos.js"></script>

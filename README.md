@@ -1,6 +1,12 @@
 # Balduin der Ball
 
-A small 2D platformer for MS-DOS, written in 16-bit x86 assembly. Balduin, a bouncing ball, must collect every diamond on a level to advance to the next one, while avoiding water and spikes. Originally built as exercise 10 (`ueb10`) for an assembly programming course in 2004.
+A small 2D platformer for MS-DOS, written in 16-bit x86 assembly by **Heiko** and **Lars** in 2004 as exercise 10 (`ueb10`) of an assembly programming course at **Fachhochschule Wedel**. Balduin, a bouncing ball, must collect every diamond on a level to advance to the next one, while avoiding water and spikes.
+
+## Play in your browser
+
+**→ [balduin.la0x.com](https://balduin.la0x.com)**
+
+The original 3,577-byte `balduin.exe` runs unmodified in the browser via [js-dos](https://js-dos.com) (DOSBox compiled to WebAssembly). Source lives in [`web/`](web/): a single HTML page plus a `.zip` bundle of the game files and a `dosbox.conf` pinning CPU speed to `fixed 26532` cycles/ms.
 
 ## Files
 
