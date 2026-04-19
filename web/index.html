@@ -46,6 +46,32 @@
       border: 1px solid #2a2a3a;
       border-radius: 10px;
     }
+    #dos:fullscreen {
+      width: 100vw;
+      height: 100vh;
+      max-width: none;
+      border: 0;
+      border-radius: 0;
+    }
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .btn {
+      appearance: none;
+      background: var(--accent);
+      color: #121212;
+      border: 0;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn:hover { filter: brightness(1.08); }
+    .btn:active { transform: translateY(1px); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .panel {
       background: var(--panel);
       border: 1px solid #2a2a3a;
@@ -95,6 +121,10 @@
 
     <canvas id="dos" width="640" height="400"></canvas>
 
+    <div class="toolbar">
+      <button class="btn" id="fullscreen-btn" type="button">Play fullscreen</button>
+    </div>
+
     <section class="panel">
       <h2>Controls</h2>
       <ul>
@@ -126,6 +156,12 @@
       fs.extract("balduin.zip?v=3").then(() => {
         main(["-conf", "dosbox.conf", "-c", "balduin.exe"]);
       });
+    });
+
+    const canvas = document.getElementById("dos");
+    document.getElementById("fullscreen-btn").addEventListener("click", () => {
+      const req = canvas.requestFullscreen || canvas.webkitRequestFullscreen;
+      req?.call(canvas).then(() => canvas.focus());
     });
   </script>
 </body>
