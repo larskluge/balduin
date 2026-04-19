@@ -112,12 +112,12 @@
       letter-spacing: 0;
       line-height: 1.45;
       margin: 0 0 14px;
-      color: var(--text);
+      color: var(--amber);
       -webkit-font-smoothing: none;
       font-smooth: never;
       word-spacing: 0.1em;
     }
-    .spine__title .amp { color: var(--amber); }
+    .spine__title .amp { color: var(--text); }
     .spine__title .break { display: block; }
     .spine__lede {
       color: var(--muted);
@@ -182,8 +182,8 @@
     #dos {
       display: block;
       width: 640px;
-      height: 400px;
       max-width: 100%;
+      aspect-ratio: 8 / 5;
       background: #000;
       border-radius: 3px;
       image-rendering: pixelated;
@@ -191,8 +191,9 @@
     }
     #dos:focus { outline: 1px solid var(--amber); outline-offset: 4px; }
     #dos:fullscreen {
-      width: 100vw;
-      height: 100vh;
+      width: min(100vw, calc(100vh * 8 / 5));
+      height: min(100vh, calc(100vw * 5 / 8));
+      max-width: none;
       border-radius: 0;
       image-rendering: pixelated;
     }
