@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Balduin der Ball — in your browser</title>
+  <link rel="stylesheet" href="https://js-dos.com/6.22/current/js-dos.css" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #12121a;
+      --panel: #1b1b28;
+      --text: #e7e7f0;
+      --muted: #8a8aa0;
+      --accent: #ffc857;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      min-height: 100vh;
+    }
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+    header h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+    }
+    header p.lede {
+      color: var(--muted);
+      margin: 0 0 24px;
+      font-size: 15px;
+    }
+    #dos {
+      width: 640px;
+      height: 400px;
+      max-width: 100%;
+      background: #000;
+      border: 1px solid #2a2a3a;
+      border-radius: 10px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid #2a2a3a;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-top: 20px;
+    }
+    .panel h2 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .panel ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    kbd {
+      background: #0e0e16;
+      border: 1px solid #33334a;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      color: var(--text);
+    }
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Balduin der Ball</h1>
+      <p class="lede">A 16-bit DOS platformer from 2004, written in x86 assembly — running in your browser via js-dos.</p>
+    </header>
+
+    <canvas id="dos" width="640" height="400"></canvas>
+
+    <section class="panel">
+      <h2>Controls</h2>
+      <ul>
+        <li><kbd>&larr;</kbd> / <kbd>&rarr;</kbd> — move left / right</li>
+        <li><kbd>&uarr;</kbd> — jump</li>
+        <li><kbd>Esc</kbd> — quit</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Goal</h2>
+      <ul>
+        <li>Collect every diamond on a level to advance to the next one.</li>
+        <li>Water, deep water, and spikes kill Balduin; the level restarts.</li>
+        <li>The world wraps horizontally — walk off one edge, come back on the other.</li>
+      </ul>
+    </section>
+
+    <footer>
+      Emulation by <a href="https://js-dos.com" target="_blank" rel="noopener">js-dos</a> (DOSBox compiled to WebAssembly). Click inside the screen first if the keyboard isn&rsquo;t responding.
+    </footer>
+  </main>
+
+  <script src="https://js-dos.com/6.22/current/js-dos.js"></script>
+  <script>
+    Dos(document.getElementById("dos"), {
+      wdosboxUrl: "https://js-dos.com/6.22/current/wdosbox.js",
+    }).ready((fs, main) => {
+      fs.extract("balduin.zip?v=3").then(() => {
+        main(["-conf", "dosbox.conf", "-c", "balduin.exe"]);
+      });
+    });
+  </script>
+</body>
+</html>
