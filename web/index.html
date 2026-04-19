@@ -58,24 +58,26 @@
     main {
       position: relative;
       z-index: 1;
-      max-width: 1120px;
+      max-width: 696px;
       margin: 0 auto;
-      padding: 44px 28px 72px;
+      padding: 44px 14px 72px;
     }
 
     /* ─── masthead (top crumbs) ─── */
     .masthead {
       display: flex;
-      gap: 14px;
+      justify-content: space-between;
       align-items: center;
+      gap: 12px;
       font-family: "JetBrains Mono", ui-monospace, monospace;
-      font-size: 11px;
-      letter-spacing: 0.18em;
+      font-size: 10px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--muted-2);
-      margin-bottom: 36px;
-      padding-bottom: 18px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
+      white-space: nowrap;
     }
     .masthead .dot {
       width: 6px; height: 6px; border-radius: 50%;
@@ -86,25 +88,30 @@
     .masthead a { color: var(--muted-2); text-decoration: none; }
     .masthead a:hover { color: var(--phosphor); }
 
-    /* ─── stage: game on left, spine on right ─── */
+    /* ─── stage: game above, spine below (single column) ─── */
     .stage {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 56px;
-      align-items: start;
-    }
-    @media (max-width: 980px) {
-      .stage { grid-template-columns: 1fr; gap: 32px; }
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
     }
     .stage__game { min-width: 0; }
-    .stage__spine { min-width: 0; padding-top: 6px; }
+    .stage__spine { min-width: 0; }
 
+    .hero { margin-bottom: 28px; text-align: center; }
+    .hero__year {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: 14px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--phosphor-dim);
+      margin: 12px 0 14px;
+    }
     .spine__title {
       font-family: "Press Start 2P", ui-monospace, monospace;
-      font-size: clamp(18px, 2vw, 22px);
+      font-size: clamp(20px, 2.2vw, 26px);
       letter-spacing: 0;
       line-height: 1.45;
-      margin: 0 0 22px;
+      margin: 0 0 14px;
       color: var(--text);
       -webkit-font-smoothing: none;
       font-smooth: never;
@@ -139,7 +146,15 @@
       box-shadow: 0 0 5px var(--phosphor);
     }
 
-    .spine__block { margin-top: 28px; }
+    .spine__blocks {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 36px;
+      margin-top: 6px;
+    }
+    @media (max-width: 540px) {
+      .spine__blocks { grid-template-columns: 1fr; gap: 24px; }
+    }
     .spine__block h2 {
       font-family: "JetBrains Mono", ui-monospace, monospace;
       font-size: 10.5px;
@@ -349,6 +364,14 @@
     }
     .rules li + li { margin-top: 6px; }
 
+    .note-mark { color: var(--amber); font-weight: 500; }
+    .note {
+      margin: 14px 0 0;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--muted-2);
+    }
+
     kbd {
       display: inline-block;
       min-width: 24px;
@@ -380,7 +403,6 @@
       font-weight: 500;
     }
     .about__story {
-      max-width: 62ch;
       color: var(--muted);
       font-size: 14px;
       line-height: 1.7;
@@ -455,14 +477,18 @@
 <body>
   <main>
     <div class="masthead">
-      <span class="dot" aria-hidden="true"></span>
       <span>ueb10.asm</span>
+      <span>2,149 lines of assembly</span>
       <span>Heiko &amp; Lars</span>
-      <span>FH Wedel · 2004</span>
+      <span>FH Wedel</span>
       <span>x86 real-mode</span>
-      <span class="spacer"></span>
-      <span>emulated via js-dos</span>
     </div>
+
+    <header class="hero">
+      <h1 class="spine__title">Balduin <span class="amp">der</span> Ball</h1>
+      <p class="hero__year">2004</p>
+      <p class="spine__lede">A 16-bit DOS platformer hand-written in x86 assembly, running in VGA mode 13h.</p>
+    </header>
 
     <div class="stage">
       <div class="stage__game">
@@ -509,27 +535,24 @@
       </div>
 
       <aside class="stage__spine">
-        <h1 class="spine__title">
-          <span class="break">Balduin</span>
-          <span class="break"><span class="amp">der</span> Ball</span>
-        </h1>
-        <p class="spine__lede">A 16-bit DOS platformer hand-written in MASM-style assembly, running natively in VGA mode 13h.</p>
-
-        <div class="spine__block">
-          <h2>Controls</h2>
-          <dl class="controls-list">
-            <dt>move</dt><dd><kbd>←</kbd> <kbd>→</kbd></dd>
-            <dt>jump</dt><dd><kbd>↑</kbd></dd>
-            <dt>quit</dt><dd><kbd>Esc</kbd></dd>
-          </dl>
-        </div>
-
-        <div class="spine__block">
-          <h2>Rules</h2>
-          <ul class="rules">
-            <li>Collect every diamond on the level to advance.</li>
-            <li>Water and spikes kill Balduin.</li>
-          </ul>
+        <div class="spine__blocks">
+          <div class="spine__block">
+            <h2>Controls</h2>
+            <dl class="controls-list">
+              <dt>move</dt><dd><kbd>←</kbd> <kbd>→</kbd></dd>
+              <dt>jump</dt><dd><kbd>↑</kbd></dd>
+              <dt>quit</dt><dd><kbd>Esc</kbd></dd>
+            </dl>
+            <p class="note"><span class="note-mark">*</span> Click the screen first to give it keyboard focus.</p>
+          </div>
+          <div class="spine__block">
+            <h2>Rules</h2>
+            <ul class="rules">
+              <li>Collect every diamond on the level to advance.</li>
+              <li>Water and spikes kill Balduin.</li>
+              <li>Five levels total — clear them all to win.</li>
+            </ul>
+          </div>
         </div>
       </aside>
     </div>
@@ -568,16 +591,18 @@
         <dd>16-byte header (<code>'BALD'</code> magic) + width × height grid of sprite indices, up to 128 × 128</dd>
 
         <dt>Source</dt>
-        <dd>A single <code>ueb10.asm</code> file, ~2,150 lines of MASM/TASM-style assembly</dd>
+        <dd>A single <code>ueb10.asm</code> file, <strong>2,149 lines</strong> of MASM/TASM-style assembly</dd>
 
         <dt>Toolchain</dt>
         <dd>TASM / MASM 6.x + 16-bit linker → <code>balduin.exe</code></dd>
+
+        <dt>Binary</dt>
+        <dd>Runs the original <code>balduin.exe</code> from 2004 — <strong>3,577 bytes</strong> (~3.5 KB), unmodified</dd>
       </dl>
     </section>
 
     <footer>
       <span>Emulated with <a href="https://js-dos.com" target="_blank" rel="noopener">js-dos</a> &middot; DOSBox compiled to WebAssembly</span>
-      <span>Click the screen to give it keyboard focus</span>
     </footer>
   </main>
 
